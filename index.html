@@ -1,15 +1,47 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home | R&M API</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="./js/index.js"></script>
-</head>
-<body>
+    <script src="./assets/js/api.js"></script>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li><img src="./assets/img/RICK_MORTY_ICON.png" alt="logo rick and morty image" /></li>
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="https://github.com/Marccelo125/rick-and-morty-api">Repositório</a></li>
+        </ul>
+      </nav>
+    </header>
     <main>
-        <section class="characters-list"></section>
+      <div class="container">
+        <img src="./assets/img/Rick_and_Morty_logo.png" alt="#">
+      </div>
+      <input type="search" placeholder="Rick Sanchez" oninput="searchCharacters()" id="searchInput"></input>
+      <small></small>
+      <section id="lista" class="characters-list"></section>
+      <article id="pageNumbers" class="pagination"></article>
+      <div class="container-footer">
+        <img src="./assets/img/rick-and-morty-portal.png" alt="#">
+      </div>
+      <script src="./assets/js/index.js"></script>
     </main>
-</body>
+    <footer>
+      <section>
+        <article id="pageFooter">
+          <p id="characters"></p>
+          <p id="location"></p>
+          <p id="episodes"></p>
+        </article>
+        <article id="dev-footer">
+          <p>Desenvolvido por:<a href="https://www.linkedin.com/in/marcelo-duarte-a1268625a/"> Marcelo Duarte</a> Em @2023</p>
+        </article>
+      </section>
+    </footer>
+  </body>
 </html>
