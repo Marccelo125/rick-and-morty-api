@@ -33,18 +33,20 @@ function renderCharacter(personagem) {
   `;
 
   const charInfoStatus = createElementWithClass("li", "char-info-status");
-  charInfoStatus.textContent = `${personagem.status} - ${personagem.species}`;
+  const characterStatus = createElementWithClass("span", "characterStatus")
+  characterStatus.textContent = ""
+  charInfoStatus.textContent += `${personagem.status} - ${personagem.species}`;
 
   if (personagem.status == "Alive") {
-    charInfoStatus.classList.add("alive");
+    characterStatus.style.backgroundColor = "lightgreen"
   }
   if (personagem.status == "Dead") {
-    charInfoStatus.classList.add("dead");
+    characterStatus.style.backgroundColor = "red"
   }
   if (personagem.status == "unknown") {
-    charInfoStatus.classList.add("unknown");
+    characterStatus.style.backgroundColor = "gray"
   }
-
+  paragraphElement.appendChild(characterStatus)
   paragraphElement.appendChild(charInfoStatus);
 
   axios
