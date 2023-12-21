@@ -132,19 +132,21 @@ small {
 
     li {
         list-style-type: none;
-
-        .alive {
-            list-style-type: circle;
-        }
-
-        .dead {
-            list-style-type: circle;
-        }
-
-        .unknown {
-            list-style-type: circle;
-        }
     }
+}
+
+.char-info-status {
+    display: inline-flex;
+    padding-bottom: 1rem;
+}
+
+.characterStatus {
+    border-radius: 50%;
+    display: inline-block;
+    height: 4px;
+    width: 10px;
+    padding-top: 7px;
+    margin-right: 5px;
 }
 
 // Characters description
@@ -219,11 +221,9 @@ footer {
 
     #dev-footer {
         display: flex;
-        justify-content: space-between;
-        padding: 3rem 20vh;
-
-        p {
-        }
+        justify-content: center;
+        padding-top: 5rem;
+        padding-bottom: 1rem;
 
         a {
             text-decoration: none;

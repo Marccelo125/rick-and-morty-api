@@ -120,14 +120,19 @@ small {
 .character-description li {
   list-style-type: none;
 }
-.character-description li .alive {
-  list-style-type: circle;
+
+.char-info-status {
+  display: inline-flex;
+  padding-bottom: 1rem;
 }
-.character-description li .dead {
-  list-style-type: circle;
-}
-.character-description li .unknown {
-  list-style-type: circle;
+
+.characterStatus {
+  border-radius: 50%;
+  display: inline-block;
+  height: 4px;
+  width: 10px;
+  padding-top: 7px;
+  margin-right: 5px;
 }
 
 .char-info-name {
@@ -195,8 +200,9 @@ footer #pageFooter {
 }
 footer #dev-footer {
   display: flex;
-  justify-content: space-between;
-  padding: 3rem 20vh;
+  justify-content: center;
+  padding-top: 5rem;
+  padding-bottom: 1rem;
 }
 footer #dev-footer a {
   text-decoration: none;
