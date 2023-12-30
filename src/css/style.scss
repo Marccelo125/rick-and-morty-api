@@ -8,12 +8,14 @@
 }
 
 .navbar {
-    background-color: $corDeFundo;
+    background-color: $corNavbar;
     padding: 20px 0;
+    margin-bottom: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: $fontePrincipal;
+    border-bottom: 1px solid rgba(228, 228, 228, 0.603);
 
     &-list {
         list-style: none;
