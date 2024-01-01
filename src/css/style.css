@@ -1,12 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+.light-theme {
+  --corDeFundo: $corDeFundo-light;
+  --corNavbar: $corNavbar-light;
+  --corTexto: $corTexto-light;
+}
+
+.dark-theme {
+  --corDeFundo: $corDeFundo-dark;
+  --corNavbar: $corNavbar-dark;
+  --corTexto: $corTexto-dark;
+}
+
 * {
   padding: 0;
   margin: 0;
 }
 
 .navbar {
-  background-color: #ebebeb;
+  background-color: var(--corNavbar);
   padding: 20px 0;
   margin-bottom: 5px;
   display: flex;
@@ -30,12 +42,12 @@
 }
 .navbar-list li h1 {
   font-size: 18px;
-  color: #131313;
+  color: var(--corTexto);
   margin: 0;
 }
 .navbar-list li a {
   text-decoration: none;
-  color: #131313;
+  color: var(--corTexto);
   font-size: 18px;
   font-weight: bold;
   transition: color 0.3s;
@@ -112,7 +124,7 @@ small {
 }
 
 .character-description {
-  background-color: #ECEFF1;
+  background-color: var(--corDeFundo);
   width: 50vh;
   border-radius: 0 20px 0 0;
   font-family: "Roboto", sans-serif;
@@ -148,6 +160,13 @@ small {
 
 .char-info-lastSeen-title {
   color: gray;
+}
+
+#theme-switch {
+  padding: 10px;
+  font-size: small;
+  border-radius: 50%;
+  background-color: dark;
 }
 
 .pagination {
@@ -211,5 +230,5 @@ footer #dev-footer a {
   color: #41BF49;
 }
 footer #dev-footer a:hover {
-  color: #ECEFF1;
+  color: var(--corDeFundo);
 }/*# sourceMappingURL=style.css.map */

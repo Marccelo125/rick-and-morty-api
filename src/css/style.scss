@@ -2,13 +2,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 
+
+.light-theme {
+    --corDeFundo: $corDeFundo-light;
+    --corNavbar: $corNavbar-light;
+    --corTexto: $corTexto-light;
+}
+
+.dark-theme {
+    --corDeFundo: $corDeFundo-dark;
+    --corNavbar: $corNavbar-dark;
+    --corTexto: $corTexto-dark;
+}
+
+
 * {
     padding: 0;
     margin: 0;
 }
 
 .navbar {
-    background-color: $corNavbar;
+    background-color: var(--corNavbar);
     padding: 20px 0;
     margin-bottom: 5px;
     display: flex;
@@ -166,6 +180,13 @@ small {
 }
 
 // Buttons
+#theme-switch {
+    padding: 10px;
+    font-size: small;
+    border-radius: 50%;
+    background-color: dark;
+}
+
 .pagination {
     display: flex;
     justify-content: center;
