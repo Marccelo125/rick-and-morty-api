@@ -1,5 +1,5 @@
 # ☕[Rick and Morty API - Project](https://github.com/Marccelo125/rick-and-morty-api) 🐲
-#### GitHub Pages: #
+#### GitHub Pages: https://marccelo125.github.io/rick-and-morty-api/
 
 > [!IMPORTANT]
 > Este repositório tem como propósito o estudo e consumo de API, para ver mais sobre meus estudos [Clique aqui](https://github.com/Marccelo125/Growdev-exercicios)</br>
