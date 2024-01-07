@@ -143,12 +143,15 @@ function getTotalPages() {
 function paginacao() {
   const pageNumbers = document.getElementById("pageNumbers");
 
-  const buttonNextPage = `<button onclick=changePage(${
-    currentPage + 1
-  })> Próxima </button>`;
-  const buttonPreviousPage = `<button onclick=changePage(${
-    currentPage - 1
-  })> Anterior </button>`;
+  const buttonNextPage =
+    currentPage < totalPages
+      ? `<button onclick=changePage(${currentPage + 1})> Próxima </button>`
+      : "";
+
+  const buttonPreviousPage =
+    currentPage > 1
+      ? `<button onclick=changePage(${currentPage - 1})> Anterior </button>`
+      : "";
 
   const buttonAnteriorHTML =
     currentPage > 1
