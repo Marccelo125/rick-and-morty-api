@@ -1,4 +1,4 @@
-# ☕[Rick and Morty API - Project](https://github.com/Marccelo125/rick-and-morty-api) 🐲
+# 👽[Rick and Morty API - Project](https://github.com/Marccelo125/rick-and-morty-api)🌠
 #### GitHub Pages: https://marccelo125.github.io/rick-and-morty-api/
 
 > [!IMPORTANT]
