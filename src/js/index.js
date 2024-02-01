@@ -6,87 +6,89 @@ const urlCharacters = "https://rickandmortyapi.com/api/character/";
 const urlEpisodes = "https://rickandmortyapi.com/api/episode/";
 const urlLocations = "https://rickandmortyapi.com/api/location/";
 
-// Funções para renderização da página
-function createElementWithClass(tag, className) {
-  const element = document.createElement(tag);
-  if (className) {
-    element.classList.add(className);
-  }
-  return element;
-}
-
-function renderCharacter(personagem) {
-  const liElement = createElementWithClass("article", "character-item");
-  const imgElement = createElementWithClass("img", "character-img");
-
-  imgElement.src = personagem.image;
-  liElement.appendChild(imgElement);
-
-  const paragraphElement = createElementWithClass(
-    "ul",
-    "character-description"
+function renderCharacter(personagem, index) {
+  const charList = document.querySelector(".characters-list");
+  const charContainer = document.createElement("div");
+  charContainer.classList.add(
+    "container-fluid",
+    "col-12",
+    "col-md-12",
+    "col-lg-6",
+    "d-flex",
+    "bg-dark",
+    "justify-content-between",
+    "align-self-center",
+    "p-0",
+    "g-3",
+    "border",
+    "rounded"
   );
+
   let episodeURL = `${urlEpisodes}${personagem.episode.length}`;
-
-  paragraphElement.innerHTML += `    
-  <li class="char-info-name">${personagem.name}</li>
-  `;
-
-  const charInfoStatus = createElementWithClass("li", "char-info-status");
-  const characterStatus = createElementWithClass("span", "characterStatus");
-  charInfoStatus.textContent += `${personagem.status} - ${personagem.species}`;
-
-  if (personagem.status == "Alive") {
-    characterStatus.style.backgroundColor = "lightgreen";
-  }
-  if (personagem.status == "Dead") {
-    characterStatus.style.backgroundColor = "red";
-  }
-  if (personagem.status == "unknown") {
-    characterStatus.style.backgroundColor = "gray";
-  }
-  paragraphElement.appendChild(characterStatus);
-  paragraphElement.appendChild(charInfoStatus);
-
   axios
     .get(episodeURL)
     .then((response) => {
       const episode = response.data.name;
-      paragraphElement.innerHTML += `
-      <br /><li class="char-info-location-title">Ultima localização conhecida</li>
-      <li>${personagem.location.name}</li>
-      <br /><li class="char-info-lastSeen-title">Visto pela ultima vez em</li>
-      <li>${episode}</li>`;
+      charContainer.innerHTML += `
+      <img src='${personagem.image}' class="img-fluid d-none d-md-flex d-lg-flex">
+        <div class="text-start text-white align-self-center p-2 fs-7">
+          <p class="fw-bold">${personagem.name}</p>
+          <p>${personagem.status} - ${personagem.species}</p>
+          <p><strong>Ultima localização conhecida</strong> ${personagem.location.name}</p>
+          <p><strong>Visto pela ultima vez em</strong> ${episode}</p>
+          <button type="button" id="button-character" class="btn btn-outline-info container-fluid" data-bs-toggle="modal" data-bs-target="#staticBackdrop-${index}">Ler mais</button>
+        </div>
+      `;
+
+      // MODAL CREATE //
+      const modal = document.createElement("div");
+      modal.innerHTML = `
+      <div class="modal fade bg-dark bg-opacity-75" tabindex="-1" id="staticBackdrop-${index}">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-success fw-bold">${personagem.name}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="container modal-body">
+              <div class="row">
+                <div class="col-12 d-flex justify-content-center">
+                  <img src='${personagem.image}' class="img-fluid">
+                </div>
+                <div class="col-12 text-center p-4">
+                  <p>${personagem.status} - ${personagem.species}</p>
+                  <p class="fw-bold">Ultima localização conhecida</p>
+                  <p>${personagem.location.name}</p>
+                  <p class="fw-bold">Visto pela ultima vez em</p>
+                  <p>${episode}</p>
+                </div>
+              </div>
+              <div class="row mx-4 align-items-center">
+              <button type="button" class="btn btn-danger container-fluid" data-bs-dismiss="modal">Fechar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      `;
+      charContainer.appendChild(modal);
     })
     .catch((error) => {
       console.error("Error:", error);
     });
-
-  liElement.appendChild(paragraphElement);
-  return liElement;
+  charList.appendChild(charContainer);
+  return charContainer;
 }
 
+// Renderiza uma linha a cada 2 personagens
 function renderCharacters(personagens) {
   const listaElement = document.getElementById("lista");
   listaElement.innerHTML = "";
 
   personagens.forEach((personagem, index) => {
-    if (index % 2 === 0 && index !== personagem.length - 1 && index > 1) {
-      const hrElement = document.createElement("hr");
-      listaElement.appendChild(hrElement);
-    }
-    const liElement = renderCharacter(personagem);
-    listaElement.appendChild(liElement);
+    const divElement = renderCharacter(personagem, index);
+    listaElement.appendChild(divElement);
   });
-}
-
-function searchCharacters() {
-  const searchTerm = document.getElementById("searchInput").value.trim();
-
-  if (searchTerm !== "") {
-    currentPage = 1;
-    fetchCharacters(currentPage, searchTerm);
-  }
 }
 
 function fetchCharacters(page, searchTerm) {
@@ -97,37 +99,14 @@ function fetchCharacters(page, searchTerm) {
   axios
     .get(url)
     .then((response) => {
-      const searchTerm = document.getElementById("searchInput");
       const personagens = response.data.results;
-      setSuccess(searchTerm, "");
       renderCharacters(personagens);
     })
     .catch((error) => {
-      const searchTerm = document.getElementById("searchInput");
-      setError(searchTerm, "Este personagem não foi encontrado");
       console.error("Error:", error);
     });
 }
 
-function setError(input, message) {
-  const formControl = input.parentElement;
-  const small = formControl.querySelector("small");
-
-  small.textContent = message;
-  formControl.classList.remove("success");
-  formControl.classList.add("error");
-}
-
-function setSuccess(input, message) {
-  const formControl = input.parentElement;
-  const small = formControl.querySelector("small");
-
-  small.textContent = message;
-  formControl.classList.remove("error");
-  formControl.classList.add("success");
-}
-
-// Funções para paginação
 function getTotalPages() {
   return axios
     .get(`${urlCharacters}`)
@@ -140,64 +119,39 @@ function getTotalPages() {
     });
 }
 
-function paginacao() {
-  const pageNumbers = document.getElementById("pageNumbers");
-
-  const buttonNextPage =
-    currentPage < totalPages
-      ? `<button onclick=changePage(${currentPage + 1})> Próxima </button>`
-      : "";
-
-  const buttonPreviousPage =
-    currentPage > 1
-      ? `<button onclick=changePage(${currentPage - 1})> Anterior </button>`
-      : "";
-
-  const buttonAnteriorHTML =
-    currentPage > 1
-      ? `<button id="btn-anterior" onclick=changePage(${currentPage - 1})> ${
-          currentPage - 1
-        } </button>`
-      : "";
-  const buttonAtualHTML = `<button onclick=changePage(${currentPage})> ${currentPage} </button>`;
-  const buttonPosteriorHTML =
-    currentPage < totalPages
-      ? `<button id="btn-posterior" onclick=changePage(${currentPage + 1})> ${
-          currentPage + 1
-        } </button>`
-      : "";
-  const buttonFinalHTML =
-    currentPage + 1 === totalPages || currentPage === totalPages
-      ? ""
-      : `
-    <span>...</span>
-    <button onclick=changePage(${totalPages})> ${totalPages} </button>
-    `;
-  const buttonInicialHTML =
-    currentPage - 1 === initialPage || currentPage === initialPage
-      ? ""
-      : `
-      <button onclick=changePage(${initialPage})> ${initialPage} </button>
-      <span>...</span>
-      `;
-
-  pageNumbers.innerHTML = `
-  ${buttonPreviousPage}
-      ${buttonInicialHTML}
-      ${buttonAnteriorHTML}
-      ${buttonAtualHTML}
-      ${buttonPosteriorHTML}
-      ${buttonFinalHTML}
-      ${buttonNextPage}
-    `;
-}
-
 function changePage(newPage) {
   if (newPage >= 1 && newPage <= totalPages) {
     currentPage = newPage;
     paginacao();
     fetchCharacters(currentPage);
   }
+}
+
+function paginacao() {
+  const paginationContainer = document.getElementById("paginacao");
+
+  const nextButton =
+    currentPage < totalPages
+      ? `<button type="button" onclick=changePage(${
+          currentPage + 1
+        }) class="btn btn-secondary col-4 my-4" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 2rem; --bs-btn-font-size: 1rem;">Próxima</button>`
+      : `<button type="button" onclick=changePage(${
+          currentPage + 1
+        }) class="btn btn-secondary col-4 my-4 disabled" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 2rem; --bs-btn-font-size: 1rem;">Próxima</button>`;
+
+  const previousButton =
+    currentPage > 1
+      ? `<button type="button" onclick=changePage(${
+          currentPage + -1
+        }) class="btn btn-secondary col-4 my-4" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 2rem; --bs-btn-font-size: 1rem;">Anterior</button>`
+      : `<button type="button" onclick=changePage(${
+          currentPage + -1
+        }) class="btn btn-secondary col-4 my-4 disabled" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 2rem; --bs-btn-font-size: 1rem;">Anterior</button>`;
+
+  paginationContainer.innerHTML = `
+  ${previousButton}
+  ${nextButton}
+  `;
 }
 
 // Chamada assíncrona para obter o total de páginas e, em seguida, executar o restante do código
